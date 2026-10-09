@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Basic MCQ Exam</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Myanmar3', sans-serif; }
+  body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  header h1 {
+    font-size: 28px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  header p { color: #666; font-size: 14px; }
+
+  .progress-bar {
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+
+  .question {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .question:last-child { border-bottom: none; }
+
+  .q-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .q-num {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .q-cat {
+    background: #eef2ff;
+    color: #6366f1;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .q-text {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    color: #1f2937;
+  }
+
+  .choices { display: flex; flex-direction: column; gap: 10px; }
+
+  .choice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 15px;
+  }
+  .choice:hover {
+    border-color: #a5b4fc;
+    background: #eef2ff;
+    transform: translateX(4px);
+  }
+  .choice input { display: none; }
+  .choice .radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #cbd5e1;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .choice .radio::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.2s;
+  }
+  .choice input:checked ~ .radio {
+    background: #667eea;
+    border-color: #667eea;
+  }
+  .choice input:checked ~ .radio::after { transform: scale(1); }
+  .choice input:checked ~ .choice-text { font-weight: 600; color: #4338ca; }
+  .choice:has(input:checked) {
+    background: #eef2ff;
+    border-color: #667eea;
+  }
+
+  .submit-area {
+    text-align: center;
+    margin-top: 30px;
+  }
+  .btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    border: none;
+    padding: 16px 48px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(102,126,234,0.4);
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(102,126,234,0.5);
+  }
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .btn-outline {
+    background: #fff;
+    color: #667eea;
+    border: 2px solid #667eea;
+    box-shadow: none;
+  }
+
+  /* Result */
+  .result-card { text-align: center; }
+  .score-circle {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: conic-gradient(#667eea var(--p), #e5e7eb 0);
+    position: relative;
+  }
+  .score-circle::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    background: #fff;
+    border-radius: 50%;
+  }
+  .score-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .score-num {
+    font-size: 42px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .score-label { font-size: 13px; color: #888; }
+  .result-msg { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+  .result-sub { color: #666; margin-bottom: 30px; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+  .stat {
+    background: #f9fafb;
+    padding: 16px;
+    border-radius: 12px;
+  }
+  .stat-num { font-size: 22px; font-weight: 800; color: #1f2937; }
+  .stat-label { font-size: 12px; color: #6b7280; margin-top: 4px; }
+  .stat.green .stat-num { color: #10b981; }
+  .stat.red .stat-num { color: #ef4444; }
+
+  .review {
+    text-align: left;
+    margin-top: 24px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 24px;
+  }
+  .review h3 { margin-bottom: 16px; font-size: 18px; }
+  .review-item {
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    border-left: 4px solid;
+  }
+  .review-item.correct { background: #ecfdf5; border-color: #10b981; }
+  .review-item.wrong { background: #fef2f2; border-color: #ef4444; }
+  .review-q { font-weight: 600; margin-bottom: 8px; font-size: 14px; }
+  .review-a { font-size: 13px; color: #555; line-height: 1.6; }
+  .review-a .lbl { font-weight: 700; }
+  .review-a .ok { color: #059669; }
+  .review-a .bad { color: #dc2626; text-decoration: line-through; }
+
+  .loader { text-align: center; padding: 60px 20px; color: #fff; font-size: 16px; }
+
+  @media (max-width: 600px) {
+    .card { padding: 20px; }
+    header h1 { font-size: 22px; }
+    .stats { grid-template-columns: 1fr; }
+    .btn { width: 100%; padding: 14px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card" id="app">
+    <div class="loader">⏳ Loading exam...</div>
+  </div>
+</div>
+
+<script>
+let examData = [];
+let userAnswers = {};
+
+async function loadExam() {
+  const res = await fetch('/api/exam');
+  examData = await res.json();
+  renderExam();
+}
+
+function renderExam() {
+  const app = document.getElementById('app');
+  let html = `
+    <header>
+      <h1>💻 Computer Basic MCQ Exam</h1>
+      <p>Total ${examData.length} Questions • Choose the best answer</p>
+    </header>
+    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+    <form id="examForm">
+  `;
+
+  examData.forEach((q, idx) => {
+    html += `
+      <div class="question">
+        <div class="q-header">
+          <div class="q-num">${idx + 1}</div>
+          <span class="q-cat">${q.category}</span>
+        </div>
+        <div class="q-text">${escapeHtml(q.question)}</div>
+        <div class="choices">
+    `;
+    q.choices.forEach((c, i) => {
+      html += `
+        <label class="choice">
+          <input type="radio" name="q${q.id}" value="${i}" onchange="updateProgress()">
+          <span class="radio"></span>
+          <span class="choice-text">${escapeHtml(c)}</span>
+        </label>
+      `;
+    });
+    html += `</div></div>`;
+  });
+
+  html += `
+    <div class="submit-area">
+      <button type="submit" class="btn" id="submitBtn" disabled>Submit Exam</button>
+    </div>
+    </form>
+  `;
+
+  app.innerHTML = html;
+  document.getElementById('examForm').addEventListener('submit', submitExam);
+}
+
+function updateProgress() {
+  const total = examData.length;
+  let answered = 0;
+  examData.forEach(q => {
+    if (document.querySelector(`input[name="q${q.id}"]:checked`)) answered++;
+  });
+  const pct = (answered / total) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+  document.getElementById('submitBtn').disabled = answered < total;
+  document.getElementById('submitBtn').textContent =
+    answered < total ? `Answer ${total - answered} more` : 'Submit Exam';
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, m => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[m]));
+}
+
+function submitExam(e) {
+  e.preventDefault();
+  let correct = 0;
+  let review = '';
+
+  examData.forEach((q, idx) => {
+    const sel = document.querySelector(`input[name="q${q.id}"]:checked`);
+    const userAns = sel ? parseInt(sel.value) : -1;
+    const isCorrect = userAns === q.answer;
+    if (isCorrect) correct++;
+
+    review += `
+      <div class="review-item ${isCorrect ? 'correct' : 'wrong'}">
+        <div class="review-q">${idx + 1}. ${escapeHtml(q.question)} <span style="color:#888;font-weight:400;">(${q.category})</span></div>
+        <div class="review-a">
+          <div><span class="lbl">Your answer:</span> <span class="${isCorrect ? 'ok' : 'bad'}">${userAns >= 0 ? escapeHtml(q.choices[userAns]) : '—'}</span></div>
+          ${!isCorrect ? `<div><span class="lbl">Correct answer:</span> <span class="ok">${escapeHtml(q.choices[q.answer])}</span></div>` : ''}
+        </div>
+      </div>
+    `;
+  });
+
+  const total = examData.length;
+  const pct = Math.round((correct / total) * 100);
+  const wrong = total - correct;
+
+  let msg, emoji;
+  if (pct >= 80) { msg = 'Excellent! 🎉'; emoji = '🏆'; }
+  else if (pct >= 60) { msg = 'Good Job! 👍'; emoji = '😊'; }
+  else if (pct >= 40) { msg = 'Keep Trying!'; emoji = '💪'; }
+  else { msg = 'Need More Practice!'; emoji = '📚'; }
+
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="result-card">
+      <header>
+        <h1>📊 Exam Result</h1>
+        <p>Computer Basic MCQ Exam</p>
+      </header>
+      <div class="score-circle" style="--p: ${pct}%">
+        <div class="score-inner">
+          <div class="score-num">${pct}%</div>
+          <div class="score-label">${correct}/${total}</div>
+        </div>
+      </div>
+      <div class="result-msg">${emoji} ${msg}</div>
+      <div class="result-sub">You answered ${correct} out of ${total} correctly</div>
+
+      <div class="stats">
+        <div class="stat green"><div class="stat-num">${correct}</div><div class="stat-label">Correct</div></div>
+        <div class="stat red"><div class="stat-num">${wrong}</div><div class="stat-label">Wrong</div></div>
+        <div class="stat"><div class="stat-num">${total}</div><div class="stat-label">Total</div></div>
+      </div>
+
+      <button class="btn" onclick="location.reload()">🔄 Take New Exam</button>
+
+      <div class="review">
+        <h3>📝 Detailed Review</h3>
+        ${review}
+      </div>
+    </div>
+  `;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+loadExam();
+</script>
+</body>
+</html>

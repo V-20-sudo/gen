@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam QR Access</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI','Myanmar3',sans-serif; }
+  body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 40px 32px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.25);
+  }
+  .badge {
+    display: inline-block;
+    background: #eef2ff;
+    color: #6366f1;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 24px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .subtitle { color: #666; font-size: 14px; margin-bottom: 28px; }
+
+  .qr-box {
+    background: #f9fafb;
+    border: 2px dashed #c7d2fe;
+    border-radius: 20px;
+    padding: 24px;
+    display: inline-block;
+    margin-bottom: 24px;
+  }
+  .qr-box img {
+    display: block;
+    width: 280px;
+    height: 280px;
+    border-radius: 12px;
+  }
+
+  .scan-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #4b5563;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .scan-hint .dot {
+    width: 8px; height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  .url-box {
+    background: #f3f4f6;
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .url-text {
+    flex: 1;
+    font-family: 'Consolas','Monaco',monospace;
+    font-size: 13px;
+    color: #4338ca;
+    font-weight: 600;
+    text-align: left;
+    word-break: break-all;
+  }
+  .copy-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .copy-btn:hover { transform: translateY(-1px); }
+  .copy-btn.copied { background: #10b981; }
+
+  .info {
+    font-size: 12px;
+    color: #9ca3af;
+    line-height: 1.6;
+  }
+
+  .loader { color: #888; padding: 40px 0; }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="loader">⏳ Generating QR...</div>
+</div>
+
+<script>
+async function init() {
+  try {
+    const res = await fetch('/api/qr');
+    const data = await res.json();
+    render(data);
+  } catch (e) {
+    document.getElementById('card').innerHTML = `<p style="color:red">Error: ${e.message}</p>`;
+  }
+}
+
+function render(data) {
+  document.getElementById('card').innerHTML = `
+    <div class="badge">📡 LIVE SESSION</div>
+    <h1>Computer Basic MCQ Exam</h1>
+    <p class="subtitle">Scan the QR below to start your exam</p>
+
+    <div class="qr-box">
+      <img src="${data.qr}" alt="Exam QR Code">
+    </div>
+
+    <div class="scan-hint">
+      <span class="dot"></span>
+      <span>Ready for scanning</span>
+    </div>
+
+    <div class="url-box">
+      <div class="url-text" id="urlText">${data.url}</div>
+      <button class="copy-btn" id="copyBtn">Copy</button>
+    </div>
+
+    <p class="info">
+      📱 Phone camera or QR scanner app ဖြင့် scan ပါ<br>
+      🌐 ဖုန်းနှင့် server သည် WiFi တူတူချိတ်ထားရပါမည်
+    </p>
+  `;
+
+  document.getElementById('copyBtn').addEventListener('click', (e) => {
+    navigator.clipboard.writeText(data.url).then(() => {
+      e.target.textContent = 'Copied!';
+      e.target.classList.add('copied');
+      setTimeout(() => {
+        e.target.textContent = 'Copy';
+        e.target.classList.remove('copied');
+      }, 1500);
+    });
+  });
+}
+
+init();
+</script>
+</body>
+</html>
