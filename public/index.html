@@ -5,407 +5,499 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Computer Basic MCQ Exam</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Myanmar3', sans-serif; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Pyidaungsu', 'Myanmar Text', -apple-system, sans-serif;
+    background: linear-gradient(135deg, #4338ca 0%, #6366f1 100%);
     min-height: 100vh;
-    padding: 20px;
-    color: #333;
+    padding: 16px;
+    color: #1f2937;
+    -webkit-tap-highlight-color: transparent;
   }
   .container {
-    max-width: 900px;
+    max-width: 720px;
     margin: 0 auto;
-  }
-  .card {
     background: #fff;
-    border-radius: 20px;
-    padding: 32px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    overflow: hidden;
   }
   header {
+    background: #4338ca;
+    color: #fff;
+    padding: 20px;
     text-align: center;
-    margin-bottom: 30px;
   }
-  header h1 {
-    font-size: 28px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 8px;
-  }
-  header p { color: #666; font-size: 14px; }
+  header h1 { font-size: 20px; margin-bottom: 4px; }
+  header p { font-size: 13px; opacity: 0.9; }
 
   .progress-bar {
-    height: 8px;
+    height: 6px;
     background: #e5e7eb;
-    border-radius: 10px;
+    position: relative;
     overflow: hidden;
-    margin-bottom: 24px;
   }
   .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #667eea, #764ba2);
+    background: #4338ca;
     width: 0%;
     transition: width 0.3s ease;
   }
 
-  .question {
-    margin-bottom: 30px;
-    padding-bottom: 30px;
+  .info-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: #f9fafb;
     border-bottom: 1px solid #e5e7eb;
+    font-size: 13px;
+    color: #6b7280;
   }
-  .question:last-child { border-bottom: none; }
+  .info-bar strong { color: #4338ca; }
 
+  main { padding: 20px; }
+
+  .question {
+    margin-bottom: 20px;
+  }
   .q-header {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
   }
-  .q-num {
-    background: linear-gradient(135deg, #667eea, #764ba2);
+  .q-number {
+    background: #4338ca;
     color: #fff;
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 14px;
-    flex-shrink: 0;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
   }
-  .q-cat {
+  .q-category {
+    font-size: 11px;
     background: #eef2ff;
-    color: #6366f1;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
+    color: #4338ca;
+    padding: 3px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
   }
   .q-text {
     font-size: 16px;
-    font-weight: 600;
     line-height: 1.6;
-    margin-bottom: 16px;
-    color: #1f2937;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: #111827;
   }
-
   .choices { display: flex; flex-direction: column; gap: 10px; }
-
   .choice {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 14px 18px;
-    background: #f9fafb;
+    padding: 14px 16px;
     border: 2px solid #e5e7eb;
     border-radius: 12px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
+    background: #fff;
+    font-size: 15px;
+    line-height: 1.4;
+    user-select: none;
+  }
+  .choice:active { transform: scale(0.98); }
+  .choice.selected {
+    border-color: #4338ca;
+    background: #eef2ff;
+  }
+  .choice-letter {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 13px;
+    transition: all 0.15s ease;
+  }
+  .choice.selected .choice-letter {
+    background: #4338ca;
+    color: #fff;
+  }
+
+  .footer {
+    padding: 16px 20px;
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    gap: 10px;
+  }
+  button {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s ease;
+  }
+  button:active { transform: scale(0.98); }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-primary { background: #4338ca; color: #fff; }
+  .btn-secondary { background: #e5e7eb; color: #374151; }
+  .btn-submit { background: #16a34a; color: #fff; }
+
+  .loading, .error {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6b7280;
     font-size: 15px;
   }
-  .choice:hover {
-    border-color: #a5b4fc;
-    background: #eef2ff;
-    transform: translateX(4px);
-  }
-  .choice input { display: none; }
-  .choice .radio {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #cbd5e1;
-    border-radius: 50%;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-  }
-  .choice .radio::after {
-    content: '';
-    width: 10px;
-    height: 10px;
-    background: #fff;
-    border-radius: 50%;
-    transform: scale(0);
-    transition: transform 0.2s;
-  }
-  .choice input:checked ~ .radio {
-    background: #667eea;
-    border-color: #667eea;
-  }
-  .choice input:checked ~ .radio::after { transform: scale(1); }
-  .choice input:checked ~ .choice-text { font-weight: 600; color: #4338ca; }
-  .choice:has(input:checked) {
-    background: #eef2ff;
-    border-color: #667eea;
-  }
+  .error { color: #dc2626; }
 
-  .submit-area {
+  /* Result screen */
+  .result {
     text-align: center;
-    margin-top: 30px;
+    padding: 30px 20px;
   }
-  .btn {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: #fff;
-    border: none;
-    padding: 16px 48px;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 10px 30px rgba(102,126,234,0.4);
-    transition: all 0.2s;
-    font-family: inherit;
-  }
-  .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 15px 40px rgba(102,126,234,0.5);
-  }
-  .btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-  }
-  .btn-outline {
-    background: #fff;
-    color: #667eea;
-    border: 2px solid #667eea;
-    box-shadow: none;
-  }
-
-  /* Result */
-  .result-card { text-align: center; }
   .score-circle {
-    width: 180px;
-    height: 180px;
-    margin: 0 auto 24px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
+    margin: 0 auto 20px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    background: conic-gradient(#667eea var(--p), #e5e7eb 0);
+    color: #fff;
+    font-weight: bold;
     position: relative;
   }
-  .score-circle::before {
-    content: '';
-    position: absolute;
-    inset: 12px;
-    background: #fff;
-    border-radius: 50%;
+  .score-circle.pass { background: linear-gradient(135deg, #16a34a, #22c55e); }
+  .score-circle.fail { background: linear-gradient(135deg, #dc2626, #ef4444); }
+  .score-num { font-size: 44px; line-height: 1; }
+  .score-label { font-size: 13px; opacity: 0.9; margin-top: 4px; }
+  .result h2 { font-size: 22px; margin-bottom: 8px; }
+  .result .stats {
+    color: #6b7280;
+    font-size: 15px;
+    margin-bottom: 24px;
   }
-  .score-inner {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .score-num {
-    font-size: 42px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .score-label { font-size: 13px; color: #888; }
-  .result-msg { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
-  .result-sub { color: #666; margin-bottom: 30px; }
+  .result .stats strong { color: #111827; }
 
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 30px;
-  }
-  .stat {
-    background: #f9fafb;
-    padding: 16px;
-    border-radius: 12px;
-  }
-  .stat-num { font-size: 22px; font-weight: 800; color: #1f2937; }
-  .stat-label { font-size: 12px; color: #6b7280; margin-top: 4px; }
-  .stat.green .stat-num { color: #10b981; }
-  .stat.red .stat-num { color: #ef4444; }
-
-  .review {
-    text-align: left;
-    margin-top: 24px;
-    border-top: 1px solid #e5e7eb;
-    padding-top: 24px;
-  }
-  .review h3 { margin-bottom: 16px; font-size: 18px; }
   .review-item {
-    padding: 16px;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    border-left: 4px solid;
+    text-align: left;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: #f9fafb;
+    border-left: 4px solid #e5e7eb;
+    font-size: 14px;
+    line-height: 1.5;
   }
-  .review-item.correct { background: #ecfdf5; border-color: #10b981; }
-  .review-item.wrong { background: #fef2f2; border-color: #ef4444; }
-  .review-q { font-weight: 600; margin-bottom: 8px; font-size: 14px; }
-  .review-a { font-size: 13px; color: #555; line-height: 1.6; }
-  .review-a .lbl { font-weight: 700; }
-  .review-a .ok { color: #059669; }
-  .review-a .bad { color: #dc2626; text-decoration: line-through; }
+  .review-item.correct { border-left-color: #16a34a; background: #f0fdf4; }
+  .review-item.wrong { border-left-color: #dc2626; background: #fef2f2; }
+  .review-item .rq { font-weight: 600; margin-bottom: 4px; }
+  .review-item .ra { font-size: 13px; color: #6b7280; }
+  .review-item .ra span { font-weight: 600; }
+  .review-item .ra .ok { color: #16a34a; }
+  .review-item .ra .no { color: #dc2626; }
 
-  .loader { text-align: center; padding: 60px 20px; color: #fff; font-size: 16px; }
-
-  @media (max-width: 600px) {
-    .card { padding: 20px; }
-    header h1 { font-size: 22px; }
-    .stats { grid-template-columns: 1fr; }
-    .btn { width: 100%; padding: 14px 20px; }
-  }
+  .hidden { display: none !important; }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="card" id="app">
-    <div class="loader">⏳ Loading exam...</div>
+  <header>
+    <h1>💻 Computer Basic MCQ Exam</h1>
+    <p>ကွန်ပျူတာ အခြေခံ စာမေးပွဲ</p>
+  </header>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+  <!-- Loading -->
+  <div id="loading" class="loading">မေးခွန်းများ ရယူနေသည်...</div>
+
+  <!-- Error -->
+  <div id="error" class="error hidden"></div>
+
+  <!-- Exam -->
+  <div id="exam" class="hidden">
+    <div class="info-bar">
+      <span>မေးခွန်း <strong id="curNum">1</strong> / <strong id="totalNum">20</strong></span>
+      <span>ဖြေပြီး <strong id="answeredNum">0</strong></span>
+    </div>
+    <main>
+      <div class="question">
+        <div class="q-header">
+          <span class="q-number" id="qNumber">Q1</span>
+          <span class="q-category" id="qCategory">Hardware</span>
+        </div>
+        <div class="q-text" id="qText"></div>
+        <div class="choices" id="choices"></div>
+      </div>
+    </main>
+    <div class="footer">
+      <button class="btn-secondary" id="prevBtn">◀ ရှေ့</button>
+      <button class="btn-primary" id="nextBtn">နောက် ▶</button>
+    </div>
+  </div>
+
+  <!-- Submit confirm (inline) -->
+  <div id="submitBar" class="footer hidden">
+    <button class="btn-submit" id="submitBtn">✔ စာမေးပွဲ အောင်ပြီ</button>
+  </div>
+
+  <!-- Result -->
+  <div id="result" class="result hidden">
+    <div class="score-circle" id="scoreCircle">
+      <div class="score-num" id="scoreNum">0</div>
+      <div class="score-label">အမှတ်</div>
+    </div>
+    <h2 id="resultTitle">ရလဒ်</h2>
+    <p class="stats">
+      မှန်သည် <strong id="correctCount">0</strong> /
+      စုစုပေါင်း <strong id="totalCount">0</strong>
+    </p>
+    <div id="reviewList"></div>
+    <button class="btn-primary" style="margin-top:20px;" onclick="location.reload()">
+      🔄 ပြန်ဖြေ
+    </button>
   </div>
 </div>
 
 <script>
-let examData = [];
-let userAnswers = {};
+(function () {
+  'use strict';
 
-async function loadExam() {
-  const res = await fetch('/api/exam');
-  examData = await res.json();
-  renderExam();
-}
+  const state = {
+    sessionId: null,
+    questions: [],
+    answers: {},   // { qid: choiceIndex }
+    current: 0
+  };
 
-function renderExam() {
-  const app = document.getElementById('app');
-  let html = `
-    <header>
-      <h1>💻 Computer Basic MCQ Exam</h1>
-      <p>Total ${examData.length} Questions • Choose the best answer</p>
-    </header>
-    <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-    <form id="examForm">
-  `;
+  const $ = id => document.getElementById(id);
+  const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-  examData.forEach((q, idx) => {
-    html += `
-      <div class="question">
-        <div class="q-header">
-          <div class="q-num">${idx + 1}</div>
-          <span class="q-cat">${q.category}</span>
-        </div>
-        <div class="q-text">${escapeHtml(q.question)}</div>
-        <div class="choices">
-    `;
-    q.choices.forEach((c, i) => {
-      html += `
-        <label class="choice">
-          <input type="radio" name="q${q.id}" value="${i}" onchange="updateProgress()">
-          <span class="radio"></span>
-          <span class="choice-text">${escapeHtml(c)}</span>
-        </label>
-      `;
+  // ---------- Load exam ----------
+  async function loadExam() {
+    try {
+      const res = await fetch('/api/exam', { cache: 'no-store' });
+      if (!res.ok) throw new Error('Server error: ' + res.status);
+      const data = await res.json();
+      if (!data.sessionId || !Array.isArray(data.questions)) {
+        throw new Error('Invalid exam data');
+      }
+      state.sessionId = data.sessionId;
+      state.questions = data.questions;
+      state.answers = {};
+      state.current = 0;
+
+      $('loading').classList.add('hidden');
+      $('exam').classList.remove('hidden');
+      $('totalNum').textContent = state.questions.length;
+
+      renderQuestion();
+    } catch (e) {
+      $('loading').classList.add('hidden');
+      const err = $('error');
+      err.textContent = '⚠️ မေးခွန်းများ ရယူ၍ မရပါ: ' + e.message;
+      err.classList.remove('hidden');
+    }
+  }
+
+  // ---------- Render ----------
+  function renderQuestion() {
+    const q = state.questions[state.current];
+    if (!q) return;
+
+    $('qNumber').textContent = 'Q' + (state.current + 1);
+    $('qCategory').textContent = q.category || 'General';
+    $('qText').textContent = q.question;
+    $('curNum').textContent = state.current + 1;
+
+    const choicesEl = $('choices');
+    choicesEl.innerHTML = '';
+
+    q.choices.forEach((text, i) => {
+      const div = document.createElement('div');
+      div.className = 'choice';
+      if (state.answers[q.id] === i) div.classList.add('selected');
+
+      const letter = document.createElement('span');
+      letter.className = 'choice-letter';
+      letter.textContent = letters[i] || String(i + 1);
+
+      const label = document.createElement('span');
+      label.textContent = text;
+
+      div.appendChild(letter);
+      div.appendChild(label);
+
+      div.addEventListener('click', () => selectChoice(q.id, i));
+      choicesEl.appendChild(div);
     });
-    html += `</div></div>`;
+
+    updateUI();
+  }
+
+  function selectChoice(qid, idx) {
+    state.answers[qid] = idx;
+
+    // update selected style
+    const choicesEl = $('choices');
+    [...choicesEl.children].forEach((el, i) => {
+      el.classList.toggle('selected', i === idx);
+    });
+
+    updateUI();
+
+    // auto-advance (small delay)
+    if (state.current < state.questions.length - 1) {
+      setTimeout(() => {
+        state.current++;
+        renderQuestion();
+      }, 200);
+    }
+  }
+
+  function updateUI() {
+    const total = state.questions.length;
+    const answered = Object.keys(state.answers).length;
+
+    $('answeredNum').textContent = answered;
+    $('progressFill').style.width = (answered / total * 100) + '%';
+
+    $('prevBtn').disabled = state.current === 0;
+
+    const isLast = state.current === total - 1;
+    $('nextBtn').classList.toggle('hidden', isLast);
+    $('submitBar').classList.toggle('hidden', !isLast);
+
+    // Submit button enable only if all answered
+    $('submitBtn').disabled = answered < total;
+  }
+
+  // ---------- Submit ----------
+  async function submitExam() {
+    const total = state.questions.length;
+    const answered = Object.keys(state.answers).length;
+
+    if (answered < total) {
+      alert('မေးခွန်း ' + (total - answered) + ' ခု မဖြေရသေးပါ။');
+      return;
+    }
+    if (!confirm('စာမေးပွဲ အောင်မြင်ပြီးလား? ပြန်ပြင်၍ မရတော့ပါ။')) return;
+
+    const btn = $('submitBtn');
+    btn.disabled = true;
+    btn.textContent = '⏳ စစ်ဆေးနေသည်...';
+
+    try {
+      // Convert answers to { qid: idx }
+      const answersPayload = {};
+      for (const qid of Object.keys(state.answers)) {
+        answersPayload[qid] = state.answers[qid];
+      }
+
+      const res = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: state.sessionId,
+          answers: answersPayload
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Submit failed');
+
+      showResult(data);
+    } catch (e) {
+      alert('⚠️ အမှား: ' + e.message);
+      btn.disabled = false;
+      btn.textContent = '✔ စာမေးပွဲ အောင်ပြီ';
+    }
+  }
+
+  // ---------- Result ----------
+  function showResult(data) {
+    $('exam').classList.add('hidden');
+    $('submitBar').classList.add('hidden');
+    $('progressFill').style.width = '100%';
+
+    const result = $('result');
+    result.classList.remove('hidden');
+
+    const passed = data.score >= 50;
+    $('scoreCircle').className = 'score-circle ' + (passed ? 'pass' : 'fail');
+    $('scoreNum').textContent = data.score;
+    $('correctCount').textContent = data.correct;
+    $('totalCount').textContent = data.total;
+
+    $('resultTitle').textContent = passed ? '🎉 အောင်မြင်ပါသည်!' : '😔 ကျရှုံးပါသည်';
+
+    // Review list
+    const reviewEl = $('reviewList');
+    reviewEl.innerHTML = '';
+
+    // build question map for review
+    const qMap = {};
+    state.questions.forEach(q => { qMap[q.id] = q; });
+
+    (data.results || []).forEach(r => {
+      const q = qMap[r.id];
+      if (!q) return;
+      const item = document.createElement('div');
+      item.className = 'review-item ' + (r.isCorrect ? 'correct' : 'wrong');
+
+      const qDiv = document.createElement('div');
+      qDiv.className = 'rq';
+      qDiv.textContent = q.question;
+
+      const aDiv = document.createElement('div');
+      aDiv.className = 'ra';
+      aDiv.innerHTML =
+        'သင့်အဖြေ: <span class="' + (r.isCorrect ? 'ok' : 'no') + '">' +
+        (r.given != null ? q.choices[r.given] : 'မဖြေခဲ့ပါ') +
+        '</span>' +
+        (r.isCorrect ? '' :
+          '<br>မှန်သောအဖြေ: <span class="ok">' +
+          q.choices[r.expected] + '</span>');
+
+      item.appendChild(qDiv);
+      item.appendChild(aDiv);
+      reviewEl.appendChild(item);
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ---------- Events ----------
+  $('nextBtn').addEventListener('click', () => {
+    if (state.current < state.questions.length - 1) {
+      state.current++;
+      renderQuestion();
+    }
   });
-
-  html += `
-    <div class="submit-area">
-      <button type="submit" class="btn" id="submitBtn" disabled>Submit Exam</button>
-    </div>
-    </form>
-  `;
-
-  app.innerHTML = html;
-  document.getElementById('examForm').addEventListener('submit', submitExam);
-}
-
-function updateProgress() {
-  const total = examData.length;
-  let answered = 0;
-  examData.forEach(q => {
-    if (document.querySelector(`input[name="q${q.id}"]:checked`)) answered++;
+  $('prevBtn').addEventListener('click', () => {
+    if (state.current > 0) {
+      state.current--;
+      renderQuestion();
+    }
   });
-  const pct = (answered / total) * 100;
-  document.getElementById('progress').style.width = pct + '%';
-  document.getElementById('submitBtn').disabled = answered < total;
-  document.getElementById('submitBtn').textContent =
-    answered < total ? `Answer ${total - answered} more` : 'Submit Exam';
-}
+  $('submitBtn').addEventListener('click', submitExam);
 
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, m => ({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-  }[m]));
-}
-
-function submitExam(e) {
-  e.preventDefault();
-  let correct = 0;
-  let review = '';
-
-  examData.forEach((q, idx) => {
-    const sel = document.querySelector(`input[name="q${q.id}"]:checked`);
-    const userAns = sel ? parseInt(sel.value) : -1;
-    const isCorrect = userAns === q.answer;
-    if (isCorrect) correct++;
-
-    review += `
-      <div class="review-item ${isCorrect ? 'correct' : 'wrong'}">
-        <div class="review-q">${idx + 1}. ${escapeHtml(q.question)} <span style="color:#888;font-weight:400;">(${q.category})</span></div>
-        <div class="review-a">
-          <div><span class="lbl">Your answer:</span> <span class="${isCorrect ? 'ok' : 'bad'}">${userAns >= 0 ? escapeHtml(q.choices[userAns]) : '—'}</span></div>
-          ${!isCorrect ? `<div><span class="lbl">Correct answer:</span> <span class="ok">${escapeHtml(q.choices[q.answer])}</span></div>` : ''}
-        </div>
-      </div>
-    `;
-  });
-
-  const total = examData.length;
-  const pct = Math.round((correct / total) * 100);
-  const wrong = total - correct;
-
-  let msg, emoji;
-  if (pct >= 80) { msg = 'Excellent! 🎉'; emoji = '🏆'; }
-  else if (pct >= 60) { msg = 'Good Job! 👍'; emoji = '😊'; }
-  else if (pct >= 40) { msg = 'Keep Trying!'; emoji = '💪'; }
-  else { msg = 'Need More Practice!'; emoji = '📚'; }
-
-  const app = document.getElementById('app');
-  app.innerHTML = `
-    <div class="result-card">
-      <header>
-        <h1>📊 Exam Result</h1>
-        <p>Computer Basic MCQ Exam</p>
-      </header>
-      <div class="score-circle" style="--p: ${pct}%">
-        <div class="score-inner">
-          <div class="score-num">${pct}%</div>
-          <div class="score-label">${correct}/${total}</div>
-        </div>
-      </div>
-      <div class="result-msg">${emoji} ${msg}</div>
-      <div class="result-sub">You answered ${correct} out of ${total} correctly</div>
-
-      <div class="stats">
-        <div class="stat green"><div class="stat-num">${correct}</div><div class="stat-label">Correct</div></div>
-        <div class="stat red"><div class="stat-num">${wrong}</div><div class="stat-label">Wrong</div></div>
-        <div class="stat"><div class="stat-num">${total}</div><div class="stat-label">Total</div></div>
-      </div>
-
-      <button class="btn" onclick="location.reload()">🔄 Take New Exam</button>
-
-      <div class="review">
-        <h3>📝 Detailed Review</h3>
-        ${review}
-      </div>
-    </div>
-  `;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-loadExam();
+  // ---------- Start ----------
+  loadExam();
+})();
 </script>
 </body>
 </html>
